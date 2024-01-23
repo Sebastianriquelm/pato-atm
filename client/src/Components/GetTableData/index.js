@@ -12,7 +12,6 @@ export default function GetTableData(props) {
 
   const handleChange = event => {
     const { value } = event.target
-    console.log("ola", event.target);
     setData(value)
   }
 
@@ -21,8 +20,7 @@ export default function GetTableData(props) {
     fetch(`${URL}/api/get-service-data/${atmId}/${data}/${serviceType}`)
       .then(response => response.json())
       .then(json => {
-        console.log(json[0],"dato");
-        setServiceData(Object.entries(json[0]))
+      setServiceData(Object.entries(json[0]))
         setPhotoFiles(json[1])
       })
       .catch(error => {
@@ -37,50 +35,49 @@ export default function GetTableData(props) {
   const tableRows = (dataType, data) => {
     const dataTypeToClient = {
       //atm_site
-      'atm_id': 'ATM ID',
-      'day': 'Fecha Auditoria',
+      'id_atm': 'ATM ID',
+      'fecha': 'Fecha Auditoria',
       'auditorname': 'Nombre Auditor',
-      'atmaccesscontrol': 'Estado acceso al cajero',
-      'operationalaccesscontrol': 'Control Acceeso operativo',
-      'electricalconnections': 'Conexión eléctrica visibles',
-      'generalstatusatmspace': 'Estado donde se ubica ATM',
-      'floorstate': 'Estado del piso',
-      'statewalls': 'Estado de las paredes',
-      'doorstatus': 'Estado de las puertas',
-      'stateheavens': 'Estado del cielo',
-      'airconditioningstatus': 'Estado Aire acondicionado',
-      'lightingstatus': 'Estado luminaria',
-      'furniturecondition': 'Estado muebles',
-      'statemonitoringcameras': 'Estado general Camaras de monitoreo',
+      'control_acceso': 'Estado acceso al cajero',
+      'control_acceso_op': 'Control Acceeso operativo',
+      'conexion_visible': 'Conexión eléctrica visibles',
+      'estado_gral_espacio': 'Estado donde se ubica ATM',
+      'estado_paredes': 'Estado de las paredes',
+      'estado_puerta': 'Estado de las puertas',
+      'estado_cielo': 'Estado del cielo',
+      'estado_ac': 'Estado Aire acondicionado',
+      'estado_iluminaria': 'Estado luminaria',
+      'estado_muebles': 'Estado muebles',
+      'estado_camaras': 'Estado general Camaras de monitoreo',
       //physical_at,
-      'atmscreenstatus': 'Estado pantalla ATM',
-      'atmkeyboardstatus': 'Teclado ATM cumple estandares',
-      'damagedatmkeypads': 'Teclado ATM presenta daños',
-      'keyboardcovers': 'Cuenta con cubre teclado',
-      'legiblereceipt': 'ATM imprime comprobante legible',
-      'atmtrash': 'Cuenta con Basurero',
-      'atmpresentation': 'Presentacion general ATM es optima',
+      'estado_pantalla': 'Estado pantalla ATM',
+      'teclado_pantalla': 'Teclado ATM cumple estandares',
+      'teclado_dano': 'Teclado ATM presenta daños',
+      'cubre_teclado': 'Cuenta con cubre teclado',
+      'impresion': 'ATM imprime comprobante legible',
+      'basurero': 'Cuenta con Basurero',
+      'presentacion': 'Presentacion general ATM es optima',
       //atm_signage
-      'visa_sticker': 'Adhesivo visa es legible',
-      'visa_adhesive_design': 'Adhesivo visa cumple diseño actual',
-      'visa_sticker_meets_location': 'Adhesivo visa cumple ubicacion según manual',
-      'mastercard_sticker': 'Adhesivo mastercard es legible',
-      'mastercard_adhesive_design': 'Adhesivo mastercard cumple diseño actual',
-      'mastercard_sticker_meets_location': 'Adhesivo mastercard cumple ubicacion según manual',
-      'visible_atm_number': 'Numero de ATM es visible',
-      'atm_safety_signage': 'Señalizacion de medidas de seguridad',
-      'atm_safety_measures_signage_stopdisc': 'Señalizacion de medidas de seguridad cumple estandares segun manual actual',
-      'redbanc_tape': 'Cuenta con huincha redbanc',
-      'redbanc_tape_location': 'Huincha redbanc cumple ubicacion según manual',
-      'redbanc_tape_meets_length': 'Huincha redbanc cumple norma de longitud segun manual',
-      'redbanc_ribbon_meets_design': 'Huincha redbanc cumple con diseño actual',
-      'graphic_on_the_side_of_atm': 'Gráfica lateral ATM (Publicidad) posee logo o huincha redbanc',
-      'floor_chart': 'Grafica de piso cumple norma grafica',
+      'ad_visa': 'Adhesivo visa es legible',
+      'ad_visa_diseno': 'Adhesivo visa cumple diseño actual',
+      'ad_ubicacion': 'Adhesivo visa cumple ubicacion según manual',
+      'ad_mc': 'Adhesivo mastercard es legible',
+      'ad_mc_diseno': 'Adhesivo mastercard cumple diseño actual',
+      'ad_mc_ubicacion': 'Adhesivo mastercard cumple ubicacion según manual',
+      'numero_atm': 'Numero de ATM es visible',
+      'sen_seg': 'Señalizacion de medidas de seguridad',
+      'sen_seg_diseno': 'Señalizacion de medidas de seguridad cumple estandares segun manual actual',
+      'redbanc': 'Cuenta con huincha redbanc',
+      'redbanc_ubicacion': 'Huincha redbanc cumple ubicacion según manual',
+      'redbanc_largo': 'Huincha redbanc cumple norma de longitud segun manual',
+      'redbanc_diseno': 'Huincha redbanc cumple con diseño actual',
+      'grafica_atm': 'Gráfica lateral ATM (Publicidad) posee logo o huincha redbanc',
+      'grafica_piso': 'Grafica de piso cumple norma grafica',
       //exterior_signage
-      'redbanc_outdoor_signage': 'Estado Señaletica exterior redbanc (Puertas)',
-      'exterior_wall_signage': 'Estado señaletica exterior (Paleta muro)',
-      'exterior_signage_selfadhesive_logo': 'Estado señaletica exterior autoadhesivos de logo o huincha en ventanas y puertas ',
-      'exterior_signage_selfadhesive_logo_ok': 'Señaletica Exterior autoadhesivos de logo o huincha en ventanas y puertas cumple lo establecido en manual'
+      'puerta': 'Estado Señaletica exterior redbanc (Puertas)',
+      'muro': 'Estado señaletica exterior (Paleta muro)',
+      'ad_visa': 'Estado señaletica exterior autoadhesivos de logo o huincha en ventanas y puertas ',
+      'ad_mc': 'Señaletica Exterior autoadhesivos de logo o huincha en ventanas y puertas cumple lo establecido en manual'
 
     }
     const booleanStringFormat = bool => bool ? 'Optimo' : 'Deficiente'
@@ -92,9 +89,9 @@ export default function GetTableData(props) {
     )
     
   }
-
+  
   const getPhotoRouteByCoincidence = photoNumber => `/Images/${photoFiles.find(photo => photo.includes(photoNumber))}`
-
+  //console.log(photoNumber);
   return (
     <>
       <h5 style={{textAlign: 'center'}}>Escoge la fecha del servicio</h5>
@@ -104,7 +101,7 @@ export default function GetTableData(props) {
           <select onChange={handleChange} value={data} required>
             
             <option value='' disabled>Selecciona una fecha</option>
-            <option value="exterior_signage">Señaletica exterior</option>
+            {console.log(data)}
             {dates.map(date => <option key={date} value={date}>{date}</option>)}
           </select>
         </label>
@@ -115,8 +112,8 @@ export default function GetTableData(props) {
           <table className="form">
             <thead>
               <tr>
-                <th>Type</th>
-                <th>Data</th>
+                <th>Cuestionario ATM</th>
+                <th>Estado ATM</th>
               </tr>
             </thead>
             <tbody>
@@ -124,36 +121,22 @@ export default function GetTableData(props) {
             </tbody>
           </table>
           <div className={styles.imageContainer}>
-            {serviceType === 'site' ?
-              <>
-                <h3>ATM Frontal</h3>
-                <img src={getPhotoRouteByCoincidence('photo1.')} alt='Foto no encontrada'/>
-                <h3>ATM Latera Derecho</h3>
-                <img src={getPhotoRouteByCoincidence('photo2.')} alt='Foto no encontrada'/>
-                <h3>ATM Latera Izquierdo</h3>
-                <img src={getPhotoRouteByCoincidence('photo3.')} alt='Foto no encontrada'/>
-                <h3>N° ATM </h3>
-                <img src={getPhotoRouteByCoincidence('photo4.')} alt='Foto no encontrada'/>
-                <h3>Estado del piso</h3>
-                <img src={getPhotoRouteByCoincidence('photo5.')} alt='Foto no encontrada'/>
-                <h3>Conexiones eléctricas</h3>
-                <img src={getPhotoRouteByCoincidence('photo6.')} alt='Foto no encontrada'/>
-              </>
-             :
-             <>
-              <h3>Operativo o no al momento de llegar</h3>
+          {serviceType === 'site' &&
+            <>
+              <h3>ATM Frontal</h3>
               <img src={getPhotoRouteByCoincidence('photo1.')} alt='Foto no encontrada'/>
-              <h3>Estado del cable de red</h3>
+              <h3>ATM Latera Derecho</h3>
               <img src={getPhotoRouteByCoincidence('photo2.')} alt='Foto no encontrada'/>
-              <h3>Voltaje local Fase Neutro</h3>
+              <h3>ATM Latera Izquierdo</h3>
               <img src={getPhotoRouteByCoincidence('photo3.')} alt='Foto no encontrada'/>
-              <h3>Voltaje local Fase Tierra</h3>
+              <h3>N° ATM </h3>
               <img src={getPhotoRouteByCoincidence('photo4.')} alt='Foto no encontrada'/>
-              <h3>Voltaje local Neutro Tierra</h3>
+              <h3>Estado del piso</h3>
               <img src={getPhotoRouteByCoincidence('photo5.')} alt='Foto no encontrada'/>
-             
-             </>            
-            }
+              <h3>Conexiones eléctricas</h3>
+              <img src={getPhotoRouteByCoincidence('photo6.')} alt='Foto no encontrada'/>
+            </>
+          }
           </div>
         </>
       }

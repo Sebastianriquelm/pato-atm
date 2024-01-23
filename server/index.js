@@ -144,24 +144,21 @@ const fieldsUploadsAtmsite = upload.fields([
   { name: 'photo6' },
 ]);
 
-/*const fieldsUploadsAtmsite = upload.fields([
-  { name: 'photo1' },
-  { name: 'photo2' },
-  { name: 'photo3' },
-  { name: 'photo4' },
-  { name: 'photo5' },
-  { name: 'photo6' },
-])*/
-
 app.post('/atm-site', fieldsUploadsAtmsite, async (req, res) => {
   try {
     // Genera un nuevo código aleatorio para cada inserción
     const cod = req.globalCode;
+    const date = new Date()
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    //const hours = date.getHours();
+    /*const minutes = date.getMinutes();
 
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
+    // Formatea los componentes de tiempo para tener dos dígitos (por ejemplo, 01 en lugar de 1)
+    const formatedHours = formartNumber(hours);
+    const formatedMinutes = formartNumber(minutes);*/
+    // Crea la cadena de fecha y hora -- ${formatedHours}:${formatedMinutes} agregar eso si se quiere setear hr y min
     const fullDateString = `${formartNumber(day)}-${formartNumber(month)}-${year}`;
 
     const {
@@ -242,21 +239,25 @@ app.post('/atm-site', fieldsUploadsAtmsite, async (req, res) => {
 });
 
 
-
 const fieldsUploadsPhysicalAtm = upload.fields([
   { name: 'photo1' },
 ])
 app.post('/Physical-Atm', fieldsUploadsPhysicalAtm, async (req, res) => {
   try {
-    /*const date = new Date()
+    const date = new Date()
     const year = date.getFullYear()
     const month = date.getMonth() + 1
     const day = date.getDate()
-    const fullDateString = `${year}-${formartNumber(month)}-${formartNumber(day)}`*/
+    //const hours = date.getHours();
+    /*const minutes = date.getMinutes();
+
+    // Formatea los componentes de tiempo para tener dos dígitos (por ejemplo, 01 en lugar de 1)
+    const formatedHours = formartNumber(hours);
+    const formatedMinutes = formartNumber(minutes);*/
+    // Crea la cadena de fecha y hora -- ${formatedHours}:${formatedMinutes} agregar eso si se quiere setear hr y min
+    const fullDateString = `${formartNumber(day)}-${formartNumber(month)}-${year}`;
     const {
       id_atm,
-      /*day,
-      auditorname,*/
       ATMscreenstatus,
       ATMKeyboardstatus,
       DamagedATMkeypads,
@@ -269,8 +270,7 @@ app.post('/Physical-Atm', fieldsUploadsPhysicalAtm, async (req, res) => {
     // Agrega logs para imprimir los valores que estás intentando insertar
     console.log("Values to insert:", {
       id_atm,
-      /*day,
-      auditorname,*/
+      fullDateString,
       ATMscreenstatus,
       ATMKeyboardstatus,
       DamagedATMkeypads,
@@ -295,20 +295,20 @@ app.post('/Physical-Atm', fieldsUploadsPhysicalAtm, async (req, res) => {
         cubre_teclado,
         impresion,
         basurero,
-        presentacion
+        presentacion,
+        fecha
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     `, [
       id_atm,
-      //day,
-      //auditorname,
       ATMscreenstatus,
       ATMKeyboardstatus,
       DamagedATMkeypads,
       keyboardcovers,
       legiblereceipt,
       ATMtrash,
-      ATMpresentation
+      ATMpresentation,
+      fullDateString
     ])
 
     res.json(newPhysicalAtm)
@@ -320,11 +320,18 @@ app.post('/Physical-Atm', fieldsUploadsPhysicalAtm, async (req, res) => {
 
 app.post('/atm-signage', fieldsUploadsPhysicalAtm, async (req, res) => {
   try {
-    /*const date = new Date()
+    const date = new Date()
     const year = date.getFullYear()
     const month = date.getMonth() + 1
     const day = date.getDate()
-    const fullDateString = `${year}-${formartNumber(month)}-${formartNumber(day)}`*/
+    //const hours = date.getHours();
+    /*const minutes = date.getMinutes();
+
+    // Formatea los componentes de tiempo para tener dos dígitos (por ejemplo, 01 en lugar de 1)
+    const formatedHours = formartNumber(hours);
+    const formatedMinutes = formartNumber(minutes);*/
+    // Crea la cadena de fecha y hora -- ${formatedHours}:${formatedMinutes} agregar eso si se quiere setear hr y min
+    const fullDateString = `${formartNumber(day)}-${formartNumber(month)}-${year}`;
     const {
       id_atm,
       //day,
@@ -362,7 +369,8 @@ app.post('/atm-signage', fieldsUploadsPhysicalAtm, async (req, res) => {
       redbanctapemeetslength,
       redbancribbonmeetsdesign,
       GraphiconthesideofAtm,
-      floorchart
+      floorchart,
+      fullDateString
     });
 
     // Validación de valores antes de la inserción
@@ -390,9 +398,10 @@ app.post('/atm-signage', fieldsUploadsPhysicalAtm, async (req, res) => {
         redbanc_diseno,
         grafica_atm,
         grafica_piso,
-        redbanc_largo
+        redbanc_largo,
+        fecha
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
     `, [
       id_atm,
       //day,
@@ -411,7 +420,8 @@ app.post('/atm-signage', fieldsUploadsPhysicalAtm, async (req, res) => {
       redbanctapemeetslength,
       redbancribbonmeetsdesign,
       GraphiconthesideofAtm,
-      floorchart
+      floorchart,
+      fullDateString
     ])
 
     res.json(newAtmAtmSignage)
@@ -425,15 +435,13 @@ const fieldsUploadsexteriorsignage = upload.fields([
 ])
 app.post('/exterior-signage', fieldsUploadsexteriorsignage, async (req, res) => {
   try {
-    /*const date = new Date()
+    const date = new Date()
     const year = date.getFullYear()
     const month = date.getMonth() + 1
     const day = date.getDate()
-    const fullDateString = `${year}-${formartNumber(month)}-${formartNumber(day)}`*/
+    const fullDateString = `${formartNumber(day)}-${formartNumber(month)}-${year}`;
     const {
       id_atm,
-      //auditorname,
-      //day,
       RedbancOutdoorSignage,
       Exteriorwallsignage,
       Exteriorsignageselfadhesivelogo,
@@ -446,7 +454,8 @@ app.post('/exterior-signage', fieldsUploadsexteriorsignage, async (req, res) => 
       RedbancOutdoorSignage,
       Exteriorwallsignage,
       Exteriorsignageselfadhesivelogo,
-      Exteriorsignageselfadhesivelogook
+      Exteriorsignageselfadhesivelogook,
+      fullDateString
     });
 
     // Validación de valores antes de la inserción
@@ -459,17 +468,17 @@ app.post('/exterior-signage', fieldsUploadsexteriorsignage, async (req, res) => 
         puerta,
         muro,
         ad_visa,
-        ad_mc
+        ad_mc,
+        fecha
       )
-      VALUES ($1, $2, $3, $4, $5)
+      VALUES ($1, $2, $3, $4, $5, $6)
       `,[  
       id_atm,
-      //auditorname,
-      //day,
       RedbancOutdoorSignage,
       Exteriorwallsignage,
       Exteriorsignageselfadhesivelogo,
-      Exteriorsignageselfadhesivelogook
+      Exteriorsignageselfadhesivelogook,
+      fullDateString
     ])
 
     res.json(newAtmExteriorSignage)
@@ -553,10 +562,19 @@ app.post('/atm-identity', fieldsUploadsAtmidentity, async (req, res) => {
 app.get('/api/get-service-data/:atmId/:serviceType', (req, res) => {
   const { atmId, serviceType } = req.params;
   
-  pool.query(`SELECT fecha FROM ${serviceType} WHERE id_site = ${atmId}`)
+  pool.query(`SELECT fecha FROM ${serviceType} WHERE id_atm = ${atmId}`)
     .then(serviceInfo => {
-      console.log(serviceInfo.rows,"aquiiiiii");
+      //console.log(serviceInfo.rows,"aquiiiiii"); 
       res.json(serviceInfo.rows)})
+    .catch(error => console.error(error))
+})
+
+app.get('/api/get-service-data/:atmId/:date/:serviceType', async (req, res) => {
+  const { atmId, date, serviceType } = req.params
+  const imagesFiles = await readdir('./public/Images')
+  const filteredFiles = imagesFiles.filter(file => file.includes(`${atmId}-${date}`))
+  pool.query(`SELECT * FROM ${serviceType} WHERE id_atm = ${atmId} AND fecha = '${date}'`)
+    .then(serviceInfo => res.json([serviceInfo.rows[0], filteredFiles]))
     .catch(error => console.error(error))
 })
 

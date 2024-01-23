@@ -29,15 +29,18 @@ export default function GetServiceData() {
     if (isNaN(+key) || key === ' ') event.preventDefault()
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event) 
+  {
+    console.log("inicio handle servicedata");
     event.preventDefault()
     const { atmId, serviceType } = form
     fetch(`${URL}/api/get-service-data/${atmId}/${serviceType}`)
       .then(response => response.json())
       .then(json => {
+        console.log(json)
         if (json.length < 1) return setNoData(true)
         setNoData(false)
-        setData(json.map(row => row.day))
+        setData(json.map(row => row.fecha))
         setShowNextForm(true)
       })
       .catch(error => {
@@ -58,13 +61,14 @@ export default function GetServiceData() {
           <select name="serviceType" value={form.serviceType} onChange={handleChange} required>
             <option value="" disabled>Tipo de servicio</option>
             <option value="site">ATM Site</option>
-            <option value="physical_atm">ATM fisico</option>
-            <option value="atm_signage">Señaletica ATM</option>
-            <option value="exterior_signage">Señaletica exterior</option>
+            <option value="fisico">ATM fisico</option>
+            <option value="senaletica">Señaletica ATM</option>
+            <option value="exterior">Señaletica exterior</option>
           </select>
         </label>
         <button>Ver fechas</button>
       </form>
+      {console.log(data)}
       {data && showNextForm && <GetTableData dates={data} atmId={form.atmId} serviceType={form.serviceType}/>}
       {noData && <h5 className="text-center">Sin datos</h5>}
       <ExitButton />
