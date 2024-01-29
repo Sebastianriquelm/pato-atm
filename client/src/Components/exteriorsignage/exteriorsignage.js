@@ -94,18 +94,7 @@ export default function Exteriorsignage() {
               setForm={setForm}
               form={form}
             />
-            <div className='itemContainer'>
-                <TextInputLabel
-                  className={styles.textInputLabel}
-                  title='Fecha Auditoria'
-                  required={true}
-                  name='day'
-                  type="text"
-                  value={form.day}
-                  handleChange={handleInputChange}
-                  isDisabled={disabledInput ? 'yes' : 'no'}
-                />
-              </div>
+            
               <div className='itemContainer'>
                 <CheckboxInputLabel
                   title='Señaletica Exterior REDBANC en puertas '

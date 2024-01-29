@@ -101,19 +101,6 @@ export default function AtmPhysicalatm() {
               />
               
               <div className='itemContainer'>
-                <TextInputLabel
-                  className={styles.textInputLabel}
-                  title='Fecha Auditoria'
-                  required={true}
-                  name='day'
-                  type="text"
-                  value={form.day}
-                  handleChange={handleInputChange}
-                  isDisabled={disabledInput ? 'yes' : 'no'}
-                />
-              </div>
-
-              <div className='itemContainer'>
                 <CheckboxInputLabel
                   title='Estado pantalla ATM '
                   name="ATMscreenstatus"

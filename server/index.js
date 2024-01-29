@@ -199,7 +199,7 @@ app.post('/atm-site', fieldsUploadsAtmsite, async (req, res) => {
 
     const newAtmAtmsite = await pool.query(`
       INSERT INTO site (
-        id_site,
+        id_atm,
         control_acceso,
         control_acceso_op,
         conexion_visible,
@@ -229,8 +229,16 @@ app.post('/atm-site', fieldsUploadsAtmsite, async (req, res) => {
       fullDateString,
       cod
     ]);
+    /*const newAuditoriaValidation = await pool.query(`
+    INSERT INTO auditoria (
+      id_atm, 
+    )
+    VALUES ($1);
+  `, [
+    id_atm
+  ]);  , auditoria: newAuditoriaValidation*/
 
-    res.json(newAtmAtmsite);
+    res.json({ atm: newAtmAtmsite});
     console.log("insert", newAtmAtmsite);
   } catch (error) {
     console.error(error);
@@ -464,7 +472,7 @@ app.post('/exterior-signage', fieldsUploadsexteriorsignage, async (req, res) => 
     }
     const newAtmExteriorSignage = await pool.query(`
       INSERT INTO exterior (
-        id_exterior,
+        id_atm,
         puerta,
         muro,
         ad_visa,
@@ -499,15 +507,8 @@ app.post('/atm-identity', fieldsUploadsAtmidentity, async (req, res) => {
     const date = new Date()
     const year = date.getFullYear()
     const month = date.getMonth() + 1
-    const day = date.getDate()
-    //const hours = date.getHours();
-    /*const minutes = date.getMinutes();
-
-    // Formatea los componentes de tiempo para tener dos dígitos (por ejemplo, 01 en lugar de 1)
-    const formatedHours = formartNumber(hours);
-    const formatedMinutes = formartNumber(minutes);*/
+    const day = date.getDate()   
     const cod = req.globalCode;
-    // Crea la cadena de fecha y hora -- ${formatedHours}:${formatedMinutes} agregar eso si se quiere setear hr y min
     const fullDateString = `${formartNumber(day)}-${formartNumber(month)}-${year}`;
     const {
       id_atm,
@@ -515,16 +516,16 @@ app.post('/atm-identity', fieldsUploadsAtmidentity, async (req, res) => {
       direccion,
       ciudad,
       nombre_cliente, 
-      region
-    } = req.body
-
-    console.log("Datos a insertar", id_atm,cod,
+      region,
+    }
+    = req.body
+    console.log("Datos a insertar", id_atm, cod,
       auditorname, fullDateString, direccion, ciudad,
       nombre_cliente,
       region
     );
 
-
+    // Insertar en la tabla atm
     const newAtmAtmValidation = await pool.query(`
       INSERT INTO atm (
         id_atm,
@@ -536,7 +537,7 @@ app.post('/atm-identity', fieldsUploadsAtmidentity, async (req, res) => {
         ciudad,
         region,
         cod
-        )
+      )
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
     `, [id_atm,
       direccion,
@@ -547,11 +548,25 @@ app.post('/atm-identity', fieldsUploadsAtmidentity, async (req, res) => {
       ciudad,
       region,
       cod
-    ])
-    
+    ]);
 
-    res.json(newAtmAtmValidation)
-    console.log("insert", newAtmAtmValidation);
+    // Insertar en la tabla auditoria
+ 
+    const newAuditoriaValidation = await pool.query(`
+      INSERT INTO auditoria (
+        id_atm,
+        fecha
+      )
+      VALUES ($1, $2);
+    `, [
+      id_atm,
+      fullDateString
+    ]);
+
+   
+
+    res.json({ atm: newAtmAtmValidation, auditoria: newAuditoriaValidation});
+    console.log("insert auditoria", id_atm, fullDateString);
 
   } catch (error) {
     console.log("errorrr")
@@ -559,6 +574,7 @@ app.post('/atm-identity', fieldsUploadsAtmidentity, async (req, res) => {
     res.sendStatus(500)
   }
 })
+
 app.get('/api/get-service-data/:atmId/:serviceType', (req, res) => {
   const { atmId, serviceType } = req.params;
   

@@ -103,19 +103,7 @@ export default function Atmsignageservice() {
                 handleInputChange={handleInputChange}
                 setForm={setForm}
               />
-
-              <div className='itemContainer'>
-                <TextInputLabel
-                  className={styles.textInputLabel}
-                  title='Fecha Auditoria'
-                  required={true}
-                  name='day'
-                  type="text"
-                  value={form.day}
-                  handleChange={handleInputChange}
-                  isDisabled={disabledInput ? 'yes' : 'no'}
-                />
-              </div>
+              
               <div className='itemContainer'>
                 <CheckboxInputLabel
                   title='Adhesivo Visa '

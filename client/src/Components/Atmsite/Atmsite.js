@@ -109,19 +109,6 @@ export default function AtmChecklist() {
                 form={form}
               />
 
-              <div className='itemContainer'>
-                <TextInputLabel
-                  className={styles.textInputLabel}
-                  title='Fecha Auditoria'
-                  required={true}
-                  name='day'
-                  type="text"
-                  value={form.day}
-                  handleChange={handleInputChange}
-                  isDisabled={disabledInput ? 'yes' : 'no'}
-                />
-              </div>
-
               <p style={{ marginBottom: 13 }}>Fotografias Obligatorias</p>
 
               <div className='itemContainer'>

@@ -8,4 +8,6 @@ DELETE FROM public.senaletica;
 
 DELETE FROM public.site;
 
+DELETE FROM public.auditoria;
+
 SELECT FROM public.senaletica;
